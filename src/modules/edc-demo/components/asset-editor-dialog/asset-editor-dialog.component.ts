@@ -30,24 +30,31 @@ export class AssetEditorDialog implements OnInit {
 
   onSave() {
     const assetEntryDto: AssetEntryDto = {
-      asset: {
-        properties: {
-          "asset:prop:name": this.name,
-          "asset:prop:version": this.version,
-          "asset:prop:id": this.id,
-          "asset:prop:contenttype": this.contenttype,
-        }
+      "@context": {
+        "edc": "https://w3id.org/edc/v0.0.1/ns/"
       },
-      dataAddress: {
-        properties: {
-          "type": this.storageTypeId,
-          "account": this.account,
-          "container": this.container,
-          "blobname": this.blobname,
-          "keyName": `${this.account}-key1`
-        },
+      "@type": "edc:Asset",
+      "@id": this.id,
+      "edc:properties": {
+          "edc:id": this.id,
+          "edc:name": this.name,
+          "edc:contenttype": this.contenttype || "text/plain",
+          "edc:version": this.version || "1.0",
+          "edc:type": "AzureStorage"
+      },
+      "edc:dataAddress": {
+          "@type": "edc:DataAddress",
+          "edc:type": "AzureStorage",
+          "edc:properties": [
+              {
+              "edc:account": this.account,
+              "edc:container": "src-container",
+              "edc:blobname": "text-document.txt",
+              "edc:keyName": "3-key1"
+              }
+          ]
       }
-    };
+  };
 
     this.dialogRef.close({ assetEntryDto });
   }

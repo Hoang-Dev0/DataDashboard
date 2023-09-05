@@ -13,8 +13,47 @@ import { AssetRequestDto } from './assetRequestDto';
 import { DataAddressDto } from './dataAddressDto';
 
 
-export interface AssetEntryDto { 
-    asset: AssetRequestDto;
-    dataAddress: DataAddressDto;
-}
+// export interface AssetEntryDto {
+// //   asset: AssetRequestDto;
+// //   dataAddress: DataAddressDto;
+// '@context': { [key: string]: string };
+// '@type': string;
+// '@id': string;
+// '@edc:properties': { [key: string]: string };
+// '@edc:dataAddress': { [key: string]: string };
+// }
+
+export interface AssetEntryDto {
+    "@context": Context
+    "@type": string
+    "@id": string
+    "edc:properties": EdcProperties
+    "edc:dataAddress": EdcDataAddress
+  }
+  
+interface Context {
+    edc: string
+  }
+  
+interface EdcProperties {
+    "edc:id": string
+    "edc:name": string
+    "edc:contenttype": string
+    "edc:version": string
+    "edc:type": string
+  }
+  
+interface EdcDataAddress {
+    "@type": string
+    "edc:type": string
+    "edc:properties": Property[]
+  }
+  
+interface Property {
+    "edc:account": string
+    "edc:container": string
+    "edc:blobname": string
+    "edc:keyName": string
+  }
+  
 
